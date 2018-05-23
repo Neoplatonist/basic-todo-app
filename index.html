@@ -5,19 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Todo App</title>
+
+  <style>
+    li, button {
+      cursor: pointer;
+    }
+
+    .done {
+      text-decoration: line-through;
+    }
+  </style>
 </head>
 <body>
   <h1>My Simple Todo App</h1>
 
-  <form action="">
-    <input type="text" name="item" id="item-input" />
+  <form>
+    <input id="item-input" type="text" name="item"/>
     <button type="submit">Submit</button>
   </form>
 
   <ul id="list"></ul>
 
   <script>
-    // Javascript goes here
+    const form = document.querySelector('form');
+    const list = document.querySelector('#list');
+
+    form.onsubmit = e => {
+      e.preventDefault();
+      const input = document.querySelector('#item-input');
+
+      list.innerHTML += '<li>' + input.value + ' <button class="delete">delete</button></li>';
+      input.value = '';
+    };
+
+    list.onclick = e => {
+      if (e.target !== e.currentTarget && e.target.nodeName === "BUTTON") {
+        e.target.parentElement.remove();
+      }
+
+      if (e.target !== e.currentTarget && e.target.nodeName === "LI") {
+        e.target.classList.toggle('done');
+      }
+    }
   </script>
 </body>
 </html>
